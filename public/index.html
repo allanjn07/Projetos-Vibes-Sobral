@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Sobral Vibe</title>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo">SOBRAL <span>VIBE</span></div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="O que tem pra hoje em Sobral?">
+        </div>
+
+        <div class="user-profile">
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="filters">
+            <button class="btn-filter active"> Hoje</button>
+            <button class="btn-filter"> Shows</button>
+            <button class="btn-filter"> Acadêmicos</button>
+            <button class="btn-filter"> Histórico</button>
+            <button class="btn-filter" id="filter-favorites"> Favoritos</button>
+        </section>
+
+        <h2 class="section-title">Próximos Eventos </h2>
+
+        <div class="events-grid">
+
+            <article class="event-card" data-category="shows">
+
+                <div class="event-image">
+                    <img src="./img/forro0.1.png.jpeg" class="img-top" alt="imagem-forro">
+                    <span class="badge">Show</span>
+
+                    <div class="favorite-icon" data-id="1">♡</div>
+                </div>
+
+                <div class="event-info">
+                    <h3>Noite do Forró no Arco</h3>
+
+                    <p class="event-details">Arco do Triunfo</p>
+                    <p class="event-time">21:00</p>
+
+                    <div class="event-footer">
+                        <button class="btn-secondary" data-location="Arco do Triunfo">
+                            Ver Mapa
+                        </button>
+
+                        <button class="btn-primary" data-type="ingresso" data-price="R$ 20,00"
+                            data-link="https://www.sympla.com.br">
+                            Ingressos
+                        </button>
+                    </div>
+
+                </div>
+            </article>
+
+            <article class="event-card" data-category="lazer">
+
+                <div class="event-image">
+                    <img src="./img/acustico0.1.png.jpeg" alt="imagem-pordosol">
+                    <span class="badge">Lazer</span>
+
+                    <div class="favorite-icon" data-id="2">♡</div>
+                </div>
+
+                <div class="event-info">
+                    <h3>Pôr do Sol Acústico</h3>
+
+                    <p class="event-details">Margem Esquerda</p>
+                    <p class="event-time">17:30</p>
+
+                    <div class="event-footer">
+                        <button class="btn-secondary" data-location="Margem Esquerda">
+                            Ver Mapa
+                        </button>
+
+                        <button class="btn-primary" data-type="info">
+                            Ver Mais
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="academicos">
+
+                <div class="event-image">
+                    <img src="./img/teatro.png" alt="imagem-teatro">
+                    <span class="badge">Cultura</span>
+
+                    <div class="favorite-icon" data-id="3">♡</div>
+                </div>
+
+                <div class="event-info">
+                    <h3>Teatro de Bonecos</h3>
+
+                    <p class="event-details">Teatro São João</p>
+                    <p class="event-time">21:00</p>
+
+                    <div class="event-footer">
+                        <button class="btn-secondary" data-location="Teatro São João">
+                            Ver Mapa
+                        </button>
+
+                        <button class="btn-primary" data-type="ingresso" data-price="R$ 10,00"
+                            data-link="https://www.sympla.com.br">
+                            Ingressos
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="shows">
+
+                <div class="event-image">
+                    <img src="./img/samba.png" alt="imagem-samba">
+                    <span class="badge">Evento</span>
+
+                    <div class="favorite-icon" data-id="4">♡</div>
+                </div>
+
+                <div class="event-info">
+                    <h3>Samba da Praça</h3>
+
+                    <p class="event-details">Praça de Cuba</p>
+                    <p class="event-time">20:00</p>
+
+                    <div class="event-footer">
+                        <button class="btn-secondary" data-location="Praça de Cuba">
+                            Ver Mapa
+                        </button>
+
+                        <button class="btn-primary" data-type="info">
+                            Ver Mais
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="shows">
+
+                <div class="event-image">
+                    <img src="./img/reggae0.1.png.jpeg" alt="imagem-reggae">
+                    <span class="badge">Show</span>
+
+                    <div class="favorite-icon" data-id="5">♡</div>
+                </div>
+
+                <div class="event-info">
+                    <h3>Reggae no Cristo</h3>
+
+                    <p class="event-details">Alto do Cristo</p>
+                    <p class="event-time">20:00</p>
+
+                    <div class="event-footer">
+                        <button class="btn-secondary" data-location="Alto do Cristo">
+                            Ver Mapa
+                        </button>
+
+                        <button class="btn-primary" data-type="info">
+                            Ver Mais
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="historico">
+
+                <div class="event-image">
+                    <img src="./img/museu-do-eclipse-sobral.png" alt="imagem-museu">
+                    <span class="badge">Histórico</span>
+
+                    <div class="favorite-icon" data-id="6">♡</div>
+                </div>
+
+                <div class="event-info">
+                    <h3>Noite do Museu</h3>
+
+                    <p class="event-details">Museu do Eclipse</p>
+                    <p class="event-time">08:00 - 17:40</p>
+
+                    <div class="event-footer">
+                        <button class="btn-secondary" data-location="Museu Eclipse Sobral">
+                            Ver Mapa
+                        </button>
+
+                        <button class="btn-primary" data-type="ingresso" data-price="R$ 10,00"
+                            data-link="https://www.google.com">
+                            Ingressos
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+
+        </div>
+
+        <section class="about">
+            <div class="about-content">
+                <h2><span>SOBRE</span> NÓS</h2>
+
+                <p>
+                    Centralizamos a pulsação cultural de Sobral. Nossa finalidade é organizar e promover eventos,
+                    shows, atividades acadêmicas e festivais, facilitando o acesso da comunidade ao que há de melhor
+                    na cidade.
+                </p>
+
+                <p>
+                    Seja bem-vindo ao hub da cultura sobralense. Aqui você encontra tudo o que está acontecendo,
+                    de forma simples, rápida e acessível.
+                </p>
+            </div>
+
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <span class="close-btn" id="closeModal">&times;</span>
+
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-location"></p>
+                    <p id="modal-time"></p>
+                    <p id="modal-info-extra"></p>
+
+                    <div class="comments-section">
+
+                        <h3>Comentários</h3>
+
+                        <div id="comments-list"></div>
+
+                        <textarea 
+                            id="comment-input" 
+                            placeholder="O que você acha deste evento?"
+                        ></textarea>
+
+                        <button id="send-comment">
+                            Enviar comentário
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+<script src="./scripts.js" defer></script>
+
+</html>
