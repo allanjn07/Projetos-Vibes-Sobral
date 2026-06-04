@@ -45,39 +45,25 @@
     </section>
   </main>
 
-  <!-- Modal Evento -->
+  <!-- Modal Evento (simples como o original) -->
   <div class="modal" id="modal-evento">
-    <div class="modal-evento-content">
-      <button class="modal-close" id="closeModalEvento">&times;</button>
-      <div class="modal-evento-img">
-        <img id="modal-img" src="" alt="">
-        <span class="modal-badge" id="modal-badge"></span>
-      </div>
-      <div class="modal-evento-body">
-        <h2 id="modal-titulo"></h2>
-        <div class="modal-meta">
-          <div class="modal-meta-item"><span>📍</span><span id="modal-local"></span></div>
-          <div class="modal-meta-item"><span>🕐</span><span id="modal-horario"></span></div>
-          <div class="modal-meta-item"><span>📅</span><span id="modal-data"></span></div>
+    <div class="modal-content">
+      <span class="close-btn" id="closeModalEvento">&times;</span>
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-local"></p>
+      <p id="modal-horario"></p>
+      <div id="modal-preco-wrap"></div>
+
+      <div class="comments-section">
+        <h3>Comentários</h3>
+        <div id="comentarios-lista"></div>
+        <div id="comentario-form" style="display:none">
+          <textarea id="comentario-texto" placeholder="O que você acha deste evento?"></textarea>
+          <button id="btn-enviar-comentario">Enviar comentário</button>
         </div>
-        <div id="modal-preco-wrap" class="modal-preco-wrap"></div>
-        <div class="modal-actions">
-          <button class="btn-mapa-modal" id="modal-btn-mapa">📍 Ver no Mapa</button>
-          <a class="btn-ingresso-modal" id="modal-btn-ingresso" href="#" target="_blank" style="display:none">🎟️ Comprar Ingresso</a>
-        </div>
-        <div class="comentarios-section">
-          <h3 class="comentarios-titulo">Comentários</h3>
-          <div id="comentarios-lista" class="comentarios-lista">
-            <p class="loading-msg-sm">Carregando comentários...</p>
-          </div>
-          <div id="comentario-form" class="comentario-form" style="display:none">
-            <textarea id="comentario-texto" placeholder="Conta como foi o evento..." rows="3"></textarea>
-            <button class="btn-enviar-comentario" id="btn-enviar-comentario">Enviar</button>
-          </div>
-          <p id="comentario-login-aviso" class="comentario-login-aviso" style="display:none">
-            <span id="abrir-login-comentario">Faça login</span> para comentar.
-          </p>
-        </div>
+        <p id="comentario-login-aviso" style="display:none;color:#888;">
+          <span id="abrir-login-comentario" style="color:#ff7a00;cursor:pointer;">Faça login</span> para comentar.
+        </p>
       </div>
     </div>
   </div>
