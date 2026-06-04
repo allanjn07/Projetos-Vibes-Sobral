@@ -5,18 +5,21 @@ let usuarioLogado = JSON.parse(localStorage.getItem("svUsuario")) || null;
 let eventoAtualId = null;
 let favoritedEvents = JSON.parse(localStorage.getItem("sobralVibeFavorites")) || [];
 
-// ─── INICIALIZAÇÃO ───────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   atualizarPerfilHeader();
   carregarEventos();
   bindFiltros();
   bindBusca();
   bindAuth();
-  bindModalEvento();
-  bindFormEvento();
+  bindModal();
 
   document.getElementById("btn-add-evento")?.addEventListener("click", () => {
     abrirFormEvento();
+  });
+
+  document.getElementById("btn-salvar-evento")?.addEventListener("click", salvarEvento);
+  document.getElementById("closeModalFormEvento")?.addEventListener("click", () => {
+    document.getElementById("modal-form-evento").style.display = "none";
   });
 });
 
@@ -61,30 +64,26 @@ function criarCard(ev) {
     </div>
     <div class="event-info">
       <h3>${ev.titulo}</h3>
-      <p class="event-details">📍 ${ev.local}</p>
-      <p class="event-time">🕐 ${ev.horario}</p>
+      <p class="event-details">${ev.local}</p>
+      <p class="event-time">${ev.horario}</p>
       <div class="event-footer">
         <button class="btn-secondary" data-location="${ev.local}">Ver Mapa</button>
-        <button class="btn-primary" data-id="${ev.id}">${btnLabel}</button>
+        <button class="btn-primary" data-id="${ev.id}" data-type="${ev.tipo}" data-price="${ev.preco || ''}" data-link="${ev.link_ingresso || ''}">${btnLabel}</button>
       </div>
     </div>
   `;
 
-  // Favoritar
   article.querySelector(".favorite-icon").addEventListener("click", (e) => {
     e.stopPropagation();
     toggleFavorito(ev.id, article.querySelector(".favorite-icon"));
   });
 
-  // Ver Mapa
   article.querySelector(".btn-secondary").addEventListener("click", () => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.local)}`;
-    window.open(url, "_blank");
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.local)}`, "_blank");
   });
 
-  // Ver Mais / Ingressos
   article.querySelector(".btn-primary").addEventListener("click", () => {
-    abrirModalEvento(ev);
+    abrirModal(ev);
   });
 
   return article;
@@ -111,7 +110,6 @@ function bindFiltros() {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".btn-filter").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-
       const texto = btn.textContent.trim().toLowerCase();
       const mapa = { "hoje": null, "shows": "shows", "acadêmicos": "academicos", "histórico": "historico", "lazer": "lazer" };
       carregarEventos(mapa[texto] ?? null);
@@ -131,37 +129,8 @@ function bindBusca() {
   });
 }
 
-// ─── MODAL EVENTO ────────────────────────────────────────────
-function abrirModalEvento(ev) {
-  eventoAtualId = ev.id;
-
-  document.getElementById("modal-img").src = ev.imagem_url || "/imagem/default.jpeg";
-  document.getElementById("modal-badge").textContent = ev.categoria;
-  document.getElementById("modal-titulo").textContent = ev.titulo;
-  document.getElementById("modal-local").textContent = ev.local;
-  document.getElementById("modal-horario").textContent = ev.horario;
-  document.getElementById("modal-data").textContent = ev.data_evento ? new Date(ev.data_evento).toLocaleDateString("pt-BR") : "";
-
-  const precoWrap = document.getElementById("modal-preco-wrap");
-  precoWrap.innerHTML = ev.preco ? `<p class="modal-preco">🎟️ ${ev.preco}</p>` : "";
-
-  const btnIngresso = document.getElementById("modal-btn-ingresso");
-  if (ev.tipo === "ingresso" && ev.link_ingresso) {
-    btnIngresso.href = ev.link_ingresso;
-    btnIngresso.style.display = "inline-block";
-  } else {
-    btnIngresso.style.display = "none";
-  }
-
-  document.getElementById("modal-btn-mapa").onclick = () => {
-    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.local)}`, "_blank");
-  };
-
-  carregarComentarios(ev.id);
-  document.getElementById("modal-evento").style.display = "flex";
-}
-
-function bindModalEvento() {
+// ─── MODAL SIMPLES ───────────────────────────────────────────
+function bindModal() {
   document.getElementById("closeModalEvento")?.addEventListener("click", () => {
     document.getElementById("modal-evento").style.display = "none";
   });
@@ -175,16 +144,37 @@ function bindModalEvento() {
   document.getElementById("btn-enviar-comentario")?.addEventListener("click", enviarComentario);
 }
 
+function abrirModal(ev) {
+  eventoAtualId = ev.id;
+
+  document.getElementById("modal-titulo").textContent = ev.titulo;
+  document.getElementById("modal-local").textContent = ev.local;
+  document.getElementById("modal-horario").textContent = ev.horario;
+
+  const precoWrap = document.getElementById("modal-preco-wrap");
+  if (ev.tipo === "ingresso" && ev.preco) {
+    precoWrap.innerHTML = `
+      <p style="margin-top:10px;">🎟️ Valor: ${ev.preco}</p>
+      <a href="${ev.link_ingresso}" target="_blank" style="display:inline-block;margin-top:10px;color:#ff7a00;">Comprar ingresso</a>
+    `;
+  } else {
+    precoWrap.innerHTML = `<p style="margin-top:10px;">Evento aberto ao público</p>`;
+  }
+
+  carregarComentarios(ev.id);
+  document.getElementById("modal-evento").style.display = "flex";
+}
+
 // ─── COMENTÁRIOS ─────────────────────────────────────────────
 async function carregarComentarios(eventoId) {
   const lista = document.getElementById("comentarios-lista");
-  lista.innerHTML = '<p class="loading-msg-sm">Carregando...</p>';
+  lista.innerHTML = '<p>Carregando comentários...</p>';
 
   try {
     const res = await fetch(`${API}/eventos/${eventoId}/comentarios`);
     const comentarios = await res.json();
 
-    lista.innerHTML = comentarios.length ? "" : '<p class="loading-msg-sm">Nenhum comentário ainda.</p>';
+    lista.innerHTML = comentarios.length ? "" : '<p>Nenhum comentário ainda.</p>';
     comentarios.forEach(c => {
       const div = document.createElement("div");
       div.className = "comment";
@@ -192,7 +182,7 @@ async function carregarComentarios(eventoId) {
       lista.appendChild(div);
     });
   } catch {
-    lista.innerHTML = '<p class="loading-msg-sm">Erro ao carregar comentários.</p>';
+    lista.innerHTML = '<p>Erro ao carregar comentários.</p>';
   }
 
   const form = document.getElementById("comentario-form");
@@ -204,11 +194,6 @@ async function carregarComentarios(eventoId) {
     form.style.display = "none";
     aviso.style.display = "block";
   }
-
-  document.getElementById("abrir-login-comentario")?.addEventListener("click", () => {
-    document.getElementById("modal-evento").style.display = "none";
-    document.getElementById("modal-auth").style.display = "flex";
-  });
 }
 
 async function enviarComentario() {
@@ -221,7 +206,6 @@ async function enviarComentario() {
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ texto })
     });
-
     if (res.ok) {
       document.getElementById("comentario-texto").value = "";
       carregarComentarios(eventoAtualId);
@@ -233,12 +217,9 @@ async function enviarComentario() {
 
 // ─── AUTH ────────────────────────────────────────────────────
 function bindAuth() {
-  const avatar = document.getElementById("user-profile");
-  avatar?.addEventListener("click", () => {
+  document.getElementById("user-profile")?.addEventListener("click", () => {
     if (token) {
-      if (confirm("Deseja sair?")) {
-        logout();
-      }
+      if (confirm("Deseja sair?")) logout();
     } else {
       document.getElementById("modal-auth").style.display = "flex";
     }
@@ -280,7 +261,6 @@ async function fazerLogin() {
       body: JSON.stringify({ email, senha })
     });
     const data = await res.json();
-
     if (!res.ok) { erro.textContent = data.error || "Erro ao fazer login"; return; }
 
     token = data.token;
@@ -307,7 +287,6 @@ async function fazerRegistro() {
       body: JSON.stringify({ nome, email, senha })
     });
     const data = await res.json();
-
     if (!res.ok) { erro.textContent = data.error || "Erro ao criar conta"; return; }
 
     token = data.token;
@@ -332,7 +311,6 @@ function logout() {
 function atualizarPerfilHeader() {
   const perfil = document.getElementById("user-profile");
   if (!perfil) return;
-
   if (usuarioLogado) {
     perfil.innerHTML = `<div class="avatar" title="${usuarioLogado.nome}">${usuarioLogado.nome.charAt(0).toUpperCase()}</div>`;
     if (usuarioLogado.role === "admin") {
@@ -362,14 +340,6 @@ function abrirFormEvento(ev = null) {
   document.getElementById("modal-form-evento").style.display = "flex";
 }
 
-function bindFormEvento() {
-  document.getElementById("closeModalFormEvento")?.addEventListener("click", () => {
-    document.getElementById("modal-form-evento").style.display = "none";
-  });
-
-  document.getElementById("btn-salvar-evento")?.addEventListener("click", salvarEvento);
-}
-
 async function salvarEvento() {
   const editId = document.getElementById("modal-form-evento").dataset.editId;
   const erro = document.getElementById("fe-error");
@@ -389,16 +359,13 @@ async function salvarEvento() {
   try {
     const url = editId ? `${API}/eventos/${editId}` : `${API}/eventos`;
     const method = editId ? "PUT" : "POST";
-
     const res = await fetch(url, {
       method,
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify(body)
     });
-
     const data = await res.json();
     if (!res.ok) { erro.textContent = data.error || "Erro ao salvar"; return; }
-
     document.getElementById("modal-form-evento").style.display = "none";
     carregarEventos();
   } catch {
