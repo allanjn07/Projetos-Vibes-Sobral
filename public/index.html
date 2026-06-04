@@ -45,7 +45,7 @@
     </section>
   </main>
 
-  <!-- Modal Evento (simples como o original) -->
+  <!-- Modal Evento -->
   <div class="modal" id="modal-evento">
     <div class="modal-content">
       <span class="close-btn" id="closeModalEvento">&times;</span>
@@ -98,30 +98,122 @@
     </div>
   </div>
 
-  <!-- Modal Auth -->
+  <!-- ═══════════════════════════════════════════════
+       Modal Auth — redesenhado
+       Todos os IDs originais mantidos intactos
+  ════════════════════════════════════════════════ -->
   <div class="modal" id="modal-auth">
-    <div class="modal-auth-content">
-      <button class="modal-close" id="closeModalAuth">&times;</button>
-      <div id="auth-login">
-        <h2>Entrar</h2>
-        <input class="auth-input" type="email" id="login-email" placeholder="E-mail">
-        <input class="auth-input" type="password" id="login-senha" placeholder="Senha">
-        <p class="auth-error" id="login-error"></p>
-        <button class="btn-primary full-btn" id="btn-login">Entrar</button>
-        <p class="auth-switch">Não tem conta? <span id="go-register">Cadastre-se</span></p>
+    <div class="modal-auth-content auth-redesign">
+
+      <!-- Botão fechar -->
+      <button class="modal-close auth-close-btn" id="closeModalAuth">&times;</button>
+
+      <!-- Logo dentro do modal -->
+      <div class="auth-logo">SOBRAL <span>VIBE</span></div>
+
+      <!-- Abas -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-entrar" onclick="svShowTab('login')">Entrar</button>
+        <button class="auth-tab" id="tab-cadastrar" onclick="svShowTab('register')">Cadastrar</button>
+        <div class="auth-tab-indicator" id="auth-tab-indicator"></div>
       </div>
+
+      <!-- ── Painel Login ── -->
+      <div id="auth-login">
+        <div class="auth-field">
+          <label class="auth-label">E-mail</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 7 10-7"/></svg>
+            <input class="auth-input" type="email" id="login-email" placeholder="seuemail@gmail.com">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-label-row">
+            <label class="auth-label">Senha</label>
+            <span class="auth-forgot">Esqueci minha senha</span>
+          </div>
+          <div class="auth-input-wrap">
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input class="auth-input" type="password" id="login-senha" placeholder="••••••••">
+            <button class="auth-eye" type="button" onclick="svTogglePass('login-senha', this)" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="auth-error" id="login-error"></p>
+        <button class="btn-primary full-btn auth-submit" id="btn-login">Entrar</button>
+        <div class="auth-divider"><span>ou continue com</span></div>
+        <button class="auth-google-btn" type="button">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908C16.658 14.013 17.64 11.705 17.64 9.2z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Continuar com Google
+        </button>
+        <p class="auth-switch">Novo por aqui? <span id="go-register">Cadastre-se</span></p>
+      </div>
+
+      <!-- ── Painel Registro ── -->
       <div id="auth-register" style="display:none">
-        <h2>Criar Conta</h2>
-        <input class="auth-input" type="text" id="reg-nome" placeholder="Nome">
-        <input class="auth-input" type="email" id="reg-email" placeholder="E-mail">
-        <input class="auth-input" type="password" id="reg-senha" placeholder="Senha">
+        <div class="auth-field">
+          <label class="auth-label">Nome completo</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <input class="auth-input" type="text" id="reg-nome" placeholder="Seu nome">
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">E-mail</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 7 10-7"/></svg>
+            <input class="auth-input" type="email" id="reg-email" placeholder="seuemail@gmail.com">
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Senha</label>
+          <div class="auth-input-wrap">
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input class="auth-input" type="password" id="reg-senha" placeholder="Mín. 8 caracteres">
+            <button class="auth-eye" type="button" onclick="svTogglePass('reg-senha', this)" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
         <p class="auth-error" id="reg-error"></p>
-        <button class="btn-primary full-btn" id="btn-register">Criar conta</button>
+        <button class="btn-primary full-btn auth-submit" id="btn-register">Criar conta</button>
+        <div class="auth-divider"><span>ou cadastre-se com</span></div>
+        <button class="auth-google-btn" type="button">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908C16.658 14.013 17.64 11.705 17.64 9.2z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Cadastrar com Google
+        </button>
         <p class="auth-switch">Já tem conta? <span id="go-login">Entrar</span></p>
       </div>
+
     </div>
   </div>
+  <!-- ═══════════════════════════════════════════════ -->
 
   <script src="scripts.js"></script>
+
+  <!-- Helpers do novo modal (não toca no scripts.js) -->
+  <script>
+    function svShowTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('auth-login').style.display = isLogin ? '' : 'none';
+      document.getElementById('auth-register').style.display = isLogin ? 'none' : '';
+      document.getElementById('tab-entrar').classList.toggle('active', isLogin);
+      document.getElementById('tab-cadastrar').classList.toggle('active', !isLogin);
+      document.getElementById('auth-tab-indicator').style.transform =
+        isLogin ? 'translateX(0)' : 'translateX(100%)';
+    }
+    function svTogglePass(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      const show = inp.type === 'password';
+      inp.type = show ? 'text' : 'password';
+      btn.style.opacity = show ? '1' : '0.45';
+    }
+    /* Sincroniza os spans go-register / go-login do scripts.js com as abas */
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('go-register')?.addEventListener('click', () => svShowTab('register'));
+      document.getElementById('go-login')?.addEventListener('click', () => svShowTab('login'));
+    });
+  </script>
 </body>
 </html>
