@@ -1,265 +1,141 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Sobral Vibe</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Sobral Vibe</title>
 </head>
-
 <body>
 
-    <header class="main-header">
-        <div class="logo">SOBRAL <span>VIBE</span></div>
+  <header class="main-header">
+    <div class="logo">SOBRAL <span>VIBE</span></div>
+    <div class="search-bar">
+      <input type="text" placeholder="O que tem pra hoje em Sobral?">
+    </div>
+    <div id="user-profile"></div>
+  </header>
 
-        <div class="search-bar">
-            <input type="text" placeholder="O que tem pra hoje em Sobral?">
+  <main class="container">
+    <section class="filters">
+      <button class="btn-filter active">Hoje</button>
+      <button class="btn-filter">Shows</button>
+      <button class="btn-filter">Acadêmicos</button>
+      <button class="btn-filter">Histórico</button>
+    </section>
+
+    <div class="section-header">
+      <h2 class="section-title">Próximos Eventos</h2>
+      <button class="btn-add-evento" id="btn-add-evento" style="display:none">+ Novo Evento</button>
+    </div>
+
+    <div class="events-grid" id="events-grid">
+      <p class="loading-msg">Carregando eventos...</p>
+    </div>
+
+    <section class="about">
+      <div class="about-content">
+        <h2><span>SOBRE</span> NÓS</h2>
+        <p>Centralizamos a pulsação cultural de Sobral. Nossa finalidade é organizar e promover eventos, shows, atividades acadêmicas e festivais, facilitando o acesso da comunidade ao que há de melhor na cidade.</p>
+        <p>Seja bem-vindo ao hub da cultura sobralense. Aqui você encontra tudo o que está acontecendo, de forma simples, rápida e acessível.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Evento -->
+  <div class="modal" id="modal-evento">
+    <div class="modal-evento-content">
+      <button class="modal-close" id="closeModalEvento">&times;</button>
+      <div class="modal-evento-img">
+        <img id="modal-img" src="" alt="">
+        <span class="modal-badge" id="modal-badge"></span>
+      </div>
+      <div class="modal-evento-body">
+        <h2 id="modal-titulo"></h2>
+        <div class="modal-meta">
+          <div class="modal-meta-item"><span>📍</span><span id="modal-local"></span></div>
+          <div class="modal-meta-item"><span>🕐</span><span id="modal-horario"></span></div>
+          <div class="modal-meta-item"><span>📅</span><span id="modal-data"></span></div>
         </div>
-
-        <div class="user-profile">
-            <div class="avatar"></div>
+        <div id="modal-preco-wrap" class="modal-preco-wrap"></div>
+        <div class="modal-actions">
+          <button class="btn-mapa-modal" id="modal-btn-mapa">📍 Ver no Mapa</button>
+          <a class="btn-ingresso-modal" id="modal-btn-ingresso" href="#" target="_blank" style="display:none">🎟️ Comprar Ingresso</a>
         </div>
-    </header>
-
-    <main class="container">
-        <section class="filters">
-            <button class="btn-filter active"> Hoje</button>
-            <button class="btn-filter"> Shows</button>
-            <button class="btn-filter"> Acadêmicos</button>
-            <button class="btn-filter"> Histórico</button>
-            <button class="btn-filter" id="filter-favorites"> Favoritos</button>
-        </section>
-
-        <h2 class="section-title">Próximos Eventos </h2>
-
-        <div class="events-grid">
-
-            <article class="event-card" data-category="shows">
-
-                <div class="event-image">
-                    <img src="./img/forro0.1.png.jpeg" class="img-top" alt="imagem-forro">
-                    <span class="badge">Show</span>
-
-                    <div class="favorite-icon" data-id="1">♡</div>
-                </div>
-
-                <div class="event-info">
-                    <h3>Noite do Forró no Arco</h3>
-
-                    <p class="event-details">Arco do Triunfo</p>
-                    <p class="event-time">21:00</p>
-
-                    <div class="event-footer">
-                        <button class="btn-secondary" data-location="Arco do Triunfo">
-                            Ver Mapa
-                        </button>
-
-                        <button class="btn-primary" data-type="ingresso" data-price="R$ 20,00"
-                            data-link="https://www.sympla.com.br">
-                            Ingressos
-                        </button>
-                    </div>
-
-                </div>
-            </article>
-
-            <article class="event-card" data-category="lazer">
-
-                <div class="event-image">
-                    <img src="./img/acustico0.1.png.jpeg" alt="imagem-pordosol">
-                    <span class="badge">Lazer</span>
-
-                    <div class="favorite-icon" data-id="2">♡</div>
-                </div>
-
-                <div class="event-info">
-                    <h3>Pôr do Sol Acústico</h3>
-
-                    <p class="event-details">Margem Esquerda</p>
-                    <p class="event-time">17:30</p>
-
-                    <div class="event-footer">
-                        <button class="btn-secondary" data-location="Margem Esquerda">
-                            Ver Mapa
-                        </button>
-
-                        <button class="btn-primary" data-type="info">
-                            Ver Mais
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <article class="event-card" data-category="academicos">
-
-                <div class="event-image">
-                    <img src="./img/teatro.png" alt="imagem-teatro">
-                    <span class="badge">Cultura</span>
-
-                    <div class="favorite-icon" data-id="3">♡</div>
-                </div>
-
-                <div class="event-info">
-                    <h3>Teatro de Bonecos</h3>
-
-                    <p class="event-details">Teatro São João</p>
-                    <p class="event-time">21:00</p>
-
-                    <div class="event-footer">
-                        <button class="btn-secondary" data-location="Teatro São João">
-                            Ver Mapa
-                        </button>
-
-                        <button class="btn-primary" data-type="ingresso" data-price="R$ 10,00"
-                            data-link="https://www.sympla.com.br">
-                            Ingressos
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <article class="event-card" data-category="shows">
-
-                <div class="event-image">
-                    <img src="./img/samba.png" alt="imagem-samba">
-                    <span class="badge">Evento</span>
-
-                    <div class="favorite-icon" data-id="4">♡</div>
-                </div>
-
-                <div class="event-info">
-                    <h3>Samba da Praça</h3>
-
-                    <p class="event-details">Praça de Cuba</p>
-                    <p class="event-time">20:00</p>
-
-                    <div class="event-footer">
-                        <button class="btn-secondary" data-location="Praça de Cuba">
-                            Ver Mapa
-                        </button>
-
-                        <button class="btn-primary" data-type="info">
-                            Ver Mais
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <article class="event-card" data-category="shows">
-
-                <div class="event-image">
-                    <img src="./img/reggae0.1.png.jpeg" alt="imagem-reggae">
-                    <span class="badge">Show</span>
-
-                    <div class="favorite-icon" data-id="5">♡</div>
-                </div>
-
-                <div class="event-info">
-                    <h3>Reggae no Cristo</h3>
-
-                    <p class="event-details">Alto do Cristo</p>
-                    <p class="event-time">20:00</p>
-
-                    <div class="event-footer">
-                        <button class="btn-secondary" data-location="Alto do Cristo">
-                            Ver Mapa
-                        </button>
-
-                        <button class="btn-primary" data-type="info">
-                            Ver Mais
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <article class="event-card" data-category="historico">
-
-                <div class="event-image">
-                    <img src="./img/museu-do-eclipse-sobral.png" alt="imagem-museu">
-                    <span class="badge">Histórico</span>
-
-                    <div class="favorite-icon" data-id="6">♡</div>
-                </div>
-
-                <div class="event-info">
-                    <h3>Noite do Museu</h3>
-
-                    <p class="event-details">Museu do Eclipse</p>
-                    <p class="event-time">08:00 - 17:40</p>
-
-                    <div class="event-footer">
-                        <button class="btn-secondary" data-location="Museu Eclipse Sobral">
-                            Ver Mapa
-                        </button>
-
-                        <button class="btn-primary" data-type="ingresso" data-price="R$ 10,00"
-                            data-link="https://www.google.com">
-                            Ingressos
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-
+        <div class="comentarios-section">
+          <h3 class="comentarios-titulo">Comentários</h3>
+          <div id="comentarios-lista" class="comentarios-lista">
+            <p class="loading-msg-sm">Carregando comentários...</p>
+          </div>
+          <div id="comentario-form" class="comentario-form" style="display:none">
+            <textarea id="comentario-texto" placeholder="Conta como foi o evento..." rows="3"></textarea>
+            <button class="btn-enviar-comentario" id="btn-enviar-comentario">Enviar</button>
+          </div>
+          <p id="comentario-login-aviso" class="comentario-login-aviso" style="display:none">
+            <span id="abrir-login-comentario">Faça login</span> para comentar.
+          </p>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <section class="about">
-            <div class="about-content">
-                <h2><span>SOBRE</span> NÓS</h2>
+  <!-- Modal Admin: Criar/Editar Evento -->
+  <div class="modal" id="modal-form-evento">
+    <div class="modal-auth-content">
+      <button class="modal-close" id="closeModalFormEvento">&times;</button>
+      <h2 id="form-evento-titulo">Novo Evento</h2>
+      <input class="auth-input" type="text" id="fe-titulo" placeholder="Título">
+      <select class="auth-input" id="fe-categoria">
+        <option value="">Categoria</option>
+        <option value="shows">Shows</option>
+        <option value="academicos">Acadêmicos</option>
+        <option value="historico">Histórico</option>
+        <option value="lazer">Lazer</option>
+        <option value="cultura">Cultura</option>
+        <option value="evento">Evento</option>
+      </select>
+      <input class="auth-input" type="text" id="fe-local" placeholder="Local">
+      <input class="auth-input" type="text" id="fe-horario" placeholder="Horário (ex: 21:00)">
+      <input class="auth-input" type="date" id="fe-data">
+      <select class="auth-input" id="fe-tipo">
+        <option value="info">Entrada gratuita / Ver Mais</option>
+        <option value="ingresso">Ingresso pago</option>
+      </select>
+      <input class="auth-input" type="text" id="fe-preco" placeholder="Preço (ex: R$ 20,00)">
+      <input class="auth-input" type="url" id="fe-link" placeholder="Link do ingresso">
+      <input class="auth-input" type="text" id="fe-imagem" placeholder="URL da imagem (ex: /imagem/foto.jpeg)">
+      <p class="auth-error" id="fe-error"></p>
+      <button class="btn-primary full-btn" id="btn-salvar-evento">Salvar Evento</button>
+    </div>
+  </div>
 
-                <p>
-                    Centralizamos a pulsação cultural de Sobral. Nossa finalidade é organizar e promover eventos,
-                    shows, atividades acadêmicas e festivais, facilitando o acesso da comunidade ao que há de melhor
-                    na cidade.
-                </p>
+  <!-- Modal Auth -->
+  <div class="modal" id="modal-auth">
+    <div class="modal-auth-content">
+      <button class="modal-close" id="closeModalAuth">&times;</button>
+      <div id="auth-login">
+        <h2>Entrar</h2>
+        <input class="auth-input" type="email" id="login-email" placeholder="E-mail">
+        <input class="auth-input" type="password" id="login-senha" placeholder="Senha">
+        <p class="auth-error" id="login-error"></p>
+        <button class="btn-primary full-btn" id="btn-login">Entrar</button>
+        <p class="auth-switch">Não tem conta? <span id="go-register">Cadastre-se</span></p>
+      </div>
+      <div id="auth-register" style="display:none">
+        <h2>Criar Conta</h2>
+        <input class="auth-input" type="text" id="reg-nome" placeholder="Nome">
+        <input class="auth-input" type="email" id="reg-email" placeholder="E-mail">
+        <input class="auth-input" type="password" id="reg-senha" placeholder="Senha">
+        <p class="auth-error" id="reg-error"></p>
+        <button class="btn-primary full-btn" id="btn-register">Criar conta</button>
+        <p class="auth-switch">Já tem conta? <span id="go-login">Entrar</span></p>
+      </div>
+    </div>
+  </div>
 
-                <p>
-                    Seja bem-vindo ao hub da cultura sobralense. Aqui você encontra tudo o que está acontecendo,
-                    de forma simples, rápida e acessível.
-                </p>
-            </div>
-
-            <div class="modal" id="modal">
-                <div class="modal-content">
-                    <span class="close-btn" id="closeModal">&times;</span>
-
-                    <h2 id="modal-title"></h2>
-                    <p id="modal-location"></p>
-                    <p id="modal-time"></p>
-                    <p id="modal-info-extra"></p>
-
-                    <div class="comments-section">
-
-                        <h3>Comentários</h3>
-
-                        <div id="comments-list"></div>
-
-                        <textarea 
-                            id="comment-input" 
-                            placeholder="O que você acha deste evento?"
-                        ></textarea>
-
-                        <button id="send-comment">
-                            Enviar comentário
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
+  <script src="scripts.js"></script>
 </body>
-
-<script src="./scripts.js" defer></script>
-
 </html>
